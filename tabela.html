@@ -1,0 +1,96 @@
+<html>
+    <head>
+<title> To-do lista</title>
+
+<link rel="stylesheet" type="text/css" href="style.css" >
+    </head>
+<body>
+    <div class="header">
+    <h2>To-do lista, upamti svoje obaveze</h2>
+    <form action="logout.php" name='logout'>
+        <input type="submit" value="Log Out" class="logout">
+
+</form>
+</div>
+
+<h1 class="imence">
+
+    <?php
+    
+    session_start();
+
+
+    if(isset($_SESSION["welcome"])){
+        echo $_SESSION["welcome"];
+        unset($_SESSION["welcome"]);
+    }
+
+
+
+
+    if(isset($_SESSION["printname"])){
+        echo $_SESSION["printname"];
+    }
+
+    ?>
+</h1>
+
+    <form class="inputs" action="baza.php" method='post'>
+        <div class="container">
+  <input type="text" name='task' > <br>
+  <input class="save" type="submit"  value="save" >
+
+ </div>
+
+</form>
+<div class="container">
+<table>
+    
+<thead>
+    <tr>
+        <th>Number</th>
+        <th>Task</th>
+        <th>Delete</th>
+    </tr>
+    </thead>
+
+<tbody>
+ 
+  <?php
+
+    $data=$_SESSION["data"];
+
+ $x=1;
+    foreach ($data as $row)
+    {
+
+    echo
+
+        
+"<tr> 
+<th>" . $x . "</th>
+<th>" . $row["task"] . "</th>
+<th><form action='deletetodo.php' method='post'><input value=".$row["id"]." name='id' hidden><button>X</button></form></th>
+</tr>";
+
+$x++;
+
+    }
+
+     if(isset($_SESSION["error"])){
+        echo $_SESSION["error"];
+        unset($_SESSION["error"]);
+    }
+
+
+    ?>
+</tbody>    
+
+
+</table>
+
+
+</div>
+</body>
+    </html>
+    
