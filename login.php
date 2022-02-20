@@ -42,6 +42,7 @@ $tasks = "SELECT * FROM obaveze WHERE user_id='$Logged_user'";
 $tasks_query = mysqli_query($ConnectBase, $tasks);
 
 $taskData=[];
+
 while (($row = mysqli_fetch_assoc($tasks_query))) {
     $taskData[] = $row;
 }
