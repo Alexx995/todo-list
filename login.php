@@ -3,9 +3,12 @@
 require_once('UserService.php');
 require_once('mysqlconnector.php');
 $ConnectBase = (new mysqlconnector())->connectToMysql();
-
+session_start();
 $email = $_POST["mail"];
 $password = $_POST["password"];
+
+$_SESSION["email"] = $email;
+
 
 $sql_find_user = "SELECT * FROM users WHERE email='$email' AND pasword='$password' ";
 
@@ -16,7 +19,7 @@ while (($row = mysqli_fetch_assoc($resultquery))) {
 }
 
 
-session_start();
+//session_start();
 $_SESSION["error"] = "";
 
 if (empty($data)) {
@@ -36,6 +39,8 @@ $sql_find_name = "SELECT ime, prezime FROM users WHERE active=1 ";
 $Namequery = mysqli_query($ConnectBase, $sql_find_name);
 $User_name = mysqli_fetch_assoc($Namequery);
 $Print_name_surname = implode(' ', $User_name);
+
+
 
 $Logged_user = (new UserService())->getLoggedInUser();
 $tasks = "SELECT * FROM obaveze WHERE user_id='$Logged_user'";
